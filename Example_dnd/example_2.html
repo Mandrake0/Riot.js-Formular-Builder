@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<style>
+    .box {
+  height: 100px;
+  width: 100px;
+  background-color: black;
+  position: relative;
+  top: 5px;
+  left: 5px;
+  cursor: pointer;
+}
+
+.held {
+  border: solid 10px black;
+  background-color: black;
+}
+
+.holder {
+  height: 110px;
+  width: 110px;
+  margin: 10px;
+  border: solid 5px black;
+  background-color: white;
+  display: inline-block;
+}
+
+.hovered {
+  border: dotted 5px black;
+}
+
+.invisible {
+  display: none;
+}
+
+#container {
+  margin: auto;
+  top: 100px;
+  width: 400px;
+  position: relative;
+}
+</style>
+<body>
+        <div class="holder">
+            <div class="box" draggable="true"></div>
+        </div>
+        <div class="holder">
+            <div class="box" draggable="true"></div>
+        </div>
+        <div class="holder">
+        </div>
+        <div class="holder">
+        </div>
+        <div class="holder">
+        </div>
+<script>
+    
+    const box = document.getElementsByClassName('box')[0]
+    const containers = document.getElementsByClassName('holder')
+    
+    for(const container of containers) {
+        container.addEventListener("dragstart", dragstart)
+        container.addEventListener("dragover", dragover)
+        container.addEventListener("dragenter", dragenter)
+        container.addEventListener("drop", drop)
+    }
+
+    function dragover(e) {
+         e.preventDefault()
+    }
+    function dragstart(e) {
+        e.dataTransfer.setData('text', e.target.parentNode.id)
+    }
+
+    static drop(e) {
+        const div = e.dataTransfer.getData('text')
+        const pointA = document.getElementById(div)
+        const pointB = document.getElementById(e.target.parentNode.id)
+        swapElements(pointA, pointB)
+    }
+
+    function dragenter(e) {
+        e.preventDefault()
+    }
+
+    function drop() {
+        this.append(box)
+    }
+
+    function swapElements(obj1, obj2) {
+        // save the location of obj2
+        var parent2 = obj2.parentNode;
+        var next2 = obj2.nextSibling;
+        // special case for obj1 is the next sibling of obj2
+        if (next2 === obj1) {
+            // just put obj1 before obj2
+            parent2.insertBefore(obj1, obj2);
+        } else {
+            // insert obj2 right before obj1
+            obj1.parentNode.insertBefore(obj2, obj1);
+
+            // now insert obj1 where obj2 was
+            if (next2) {
+                // if there was an element after obj2, then insert obj1 right before that
+                parent2.insertBefore(obj1, next2);
+            } else {
+                // otherwise, just append as last child
+                parent2.appendChild(obj1);
+            }
+        }
+    }
+
+
+
+</script>
+</body>
+</html>

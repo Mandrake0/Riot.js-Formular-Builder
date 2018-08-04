@@ -1,0 +1,25 @@
+* {
+    box-sizing: border-box;
+    
+}
+
+.border_padding{
+    padding-left: 20px;
+}
+
+nav {
+    float: left;
+    width: 20%;
+}
+
+article {
+    float: left;
+    width: 80%;
+}
+
+/* Clear floats after the columns */
+section:after {
+    content: "";
+    display: table;
+    clear: both;
+}

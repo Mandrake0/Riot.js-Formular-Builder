@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+
+    <style>
+    html,body{
+  width:100%;
+  height:100%;
+  padding:0px;
+  margin:0px;
+}
+
+.drag-list{
+  width:100%;height:100%;
+  background:#49F;
+}
+
+.drag-list .list{
+  background:#e1e1e1;
+  border-radius:6px;
+  margin:4px;
+  width:120px;
+  float:left;
+
+}
+
+.drag-list .list p { 
+  text-align:left; 
+  margin:10px 10px 10px 10px; 
+  font-weight:bold;
+  user-select: none;
+  -webkit-user-select: none;
+  color:#888;
+}
+
+.drag-list .page{
+  background:#fafafa;
+  width:90px;
+  cursor: pointer;
+  text-align:center;
+  margin:4px;
+  margin-left:10px;
+  padding:4px;
+  border-radius:4px;
+  color:#666;
+  box-shadow: 1px 2px 4px rgba(0, 0, 0, .5);
+}
+
+.drag-list .list .page:hover{ background:#e9e9e9}
+
+.rotated {transform: rotateZ(6deg);}
+
+.drag-list .placeholder{
+    width:90px;
+    height:26px;
+    margin:4px;
+    margin-left:10px;
+    background:coral;
+    border-width:2px;
+    border-style:dashed;
+    border-radius:4px;
+    border-color:#aaa;
+}    
+    </style>
+<body>
+         <!-- Riot js file -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/riot/3.11.1/riot+compiler.min.js"></script>
+
+    <script src="drag-lists.tag" type="riot/tag"></script>
+       
+    <drag-lists class="drag-list"></drag-lists>
+       
+    <script>
+        riot.mount('*');
+    </script>        
+</body>
+</html>
