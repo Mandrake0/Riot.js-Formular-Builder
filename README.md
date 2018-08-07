@@ -1,5 +1,3 @@
-Currently no Drag and Drop Implemented
-
 # Riot.js Formular Example
 Example for a Drag and Drop Setup for Creating a Formular
 
@@ -15,7 +13,7 @@ editmode    |   Bool    |   De/Activates the Formular Editing Mode
 
 
 ## Data Structure
-
+Needs to be done
 
 title: "",
 description: "",
@@ -26,3 +24,9 @@ pages: [
         {bla bla bla.......}
     ]}
 ]
+
+
+### Missing Features
+- Automatic load of tags
+- JSON export of the Data Structure with the Anwsers 
+- Cleanup code 

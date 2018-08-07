@@ -1,10 +1,12 @@
 <view-component>
     <h4>View Component</h4>
     <div each="{ item, index in componentList }">
+        <div id="dragComponent" refs={ item.component } draggable={editmode} >
         <button onclick={ addComponent } class="comp-button mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">
             <i class="material-icons">{ item.icon }</i>
             { item.name }
         </button>
+        </div>
     </div>
     <style>
         /* For a better Layout */
@@ -25,14 +27,16 @@
                                 {name:"Button4", icon:"flag", component:"comp-date"},
                                 {name:"Button5", icon:"create", component:"bla5"}
                              ]
-            
-        console.log(this.componentList)
-        
         addComponent(e){
-            console.log(e.item.item.component)
             this.observable.trigger('addcomp', e.item.item.component)
         }
 
+        // Editmode
+        this.editmode = false
+        this.observable.on('editmode', function(mode){
+            self.editmode = mode
+            self.update()
+        })
             
     </script>
 </view-component>

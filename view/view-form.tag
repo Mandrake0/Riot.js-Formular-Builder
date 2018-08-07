@@ -7,7 +7,7 @@
     <!-- List Container -->
         <div each="{ item, i in items }" >
             <div class="dropzone" show={ editmode } refs={i}></div>
-            <div draggable="true" class="card-custom demo-card-wide mdl-card mdl-shadow--2dp" refs={i}>
+            <div draggable={ editmode } class="card-custom demo-card-wide mdl-card mdl-shadow--2dp" refs={i}>
             <!-- Left aligned menu below button -->
             <div show={ editmode }>
                 <button onclick={ moveComponent.bind(this, i, i-1) } class="mdl-button mdl-js-button mdl-button--icon"><i class="material-icons">keyboard_arrow_up</i></button>
@@ -17,17 +17,16 @@
             <div data-is="{ item.type }"></div>
             </div>
         </div>
-        <div class="dropzone" show={ editmode }></div>
+        <div class="dropzone" show={ editmode } refs={ items.length }></div>
     <div>
         <button class="send-btn mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">Send</button>
         <button onclick={ clearComponents } class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">Clear Form</button>
     </div>
     <style>  
-
         .dropzone {
             width: 400px;
             height: 20px;
-            background: blueviolet;
+            background:#cfcfcf;
             margin-bottom: 10px;
             padding: 10px;
         }
@@ -36,7 +35,6 @@
             min-height: 50px;
             margin-bottom: 20px;
             min-width: 400px;
-
         }
         .send-btn {
             width: 200px;
@@ -61,19 +59,18 @@
 
          /* events fired on the draggable target */
          document.addEventListener("drag", function( event ) {
-
         }, false)
 
         document.addEventListener("dragstart", function( event ) {
             // store a ref. on the dragged elem
-            if (event.srcElement.id === 'button'){
-                /var item = document.getElementById('draggable')
-                //dragged = item.cloneNode(true)
+            console.log(event)
+            if (event.srcElement.id === 'dragComponent'){
+                self.items.push({'type': event.srcElement.attributes.refs.value})
+                self.dragId = self.items.length -1
             }
             else {
-                dragged = event.target
+                self.dragId = event.srcElement.attributes.refs.value    
             }
-            this.dragId = event.srcElement.attributes.refs.value
             // make it half transparent
             event.target.style.opacity = .5
         }, false)
@@ -92,7 +89,7 @@
         document.addEventListener("dragenter", function( event ) {
             // highlight potential drop target when the draggable element enters it
             if ( event.target.className == "dropzone" ) {
-                event.target.style.background = "purple"
+                event.target.style.background = "red"
                 event.target.style.height = "50px"
             }
 
@@ -110,22 +107,22 @@
         document.addEventListener("drop", function( event ) {
             // prevent default action (open as link for some elements)
             event.preventDefault()
-            var drag_pos = parseInt(this.dragId)
+            var drag_pos = parseInt(self.dragId)
             // move dragged elem to the selected drop target
             if ( event.target.className == "dropzone" ) {
+                console.log(event)
                 var drop_pos = parseInt(event.srcElement.attributes.refs.value)
+                console.log(drag_pos, drop_pos)
                 self.moveComponent(drag_pos,drop_pos)
                 // clean up
                 event.target.style.background = ""
                 event.target.style.height = "20px"
             }
             else{
-                this.moveComponent(drag_pos,-2)
-                dragged.parentNode.removeChild( dragged )
+                //self.moveComponent(drag_pos,-2)
             }
             this.dragId = ''
             self.update() 
-            
         }, false)
 
         /* 
@@ -163,6 +160,7 @@
         // Observable Add Component
         this.observable.on('addcomp', function(value){
            self.items.push({'type': value})
+           console.log(value)
            self.update()
         })
 
